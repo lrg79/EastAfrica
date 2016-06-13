@@ -1,0 +1,3 @@
+Project I am working on to get familiar with python and webcrawlers. This will ideally pull articles from various news sites once a day
+and categorize them into certain crimes. From there, the data will hopefully be exported into a JSON file, and visually graphed 
+using D3.js
