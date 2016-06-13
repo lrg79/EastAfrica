@@ -1,0 +1,34 @@
+import requests
+from bs4 import BeautifulSoup
+
+import schedule
+import time
+
+def getNYTURL():
+	url = "http://www.nytimes.com/pages/world/africa/index.html?module=SectionsNav&action=click&version=BrowseTree&region=TopBar&contentCollection=World%2FAfrica&contentPlacement=2&pgtype=Homepage"
+	r = requests.get(url)
+	a = ["east africa", "kenya", "tanzania", "burundi", "rwanda", "uganda", "sudan", "ethiopia", "eritrea", "djibouti", "somalia"]
+	text = r.text
+	soup = BeautifulSoup(text, "html.parser")
+	for story in soup.findAll('div', {'class':'abColumn'}):
+		for link in story.findAll('a'):
+			href = link.get('href')
+			if any(x in href for x in a):
+				print(href)
+				#getNYTCat(href)
+
+def getNYTCat(href):
+	url = href;
+	r = requests.get(url)
+	text = r.text
+
+	#keywords
+	politicalUnrest = ["coup"]
+	againstHumanity = ["slavery", "enslavement"]
+	terrorist = ["terrorist", "suicide bomb"]
+
+	soup = BeautifulSoup(text, "html.parser")
+	for story in soup.findAll('p', {'class', 'story-body-text story-content'}):
+		print(story)
+
+getNYTURL()
