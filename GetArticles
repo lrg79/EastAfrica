@@ -15,20 +15,19 @@ def getNYTURL():
 			href = link.get('href')
 			if any(x in href for x in a):
 				print(href)
-				#getNYTCat(href)
+				getNYTCat(href)
 
 def getNYTCat(href):
 	url = href;
 	r = requests.get(url)
 	text = r.text
-
 	#keywords
 	politicalUnrest = ["coup"]
 	againstHumanity = ["slavery", "enslavement"]
 	terrorist = ["terrorist", "suicide bomb"]
-
 	soup = BeautifulSoup(text, "html.parser")
-	for story in soup.findAll('p', {'class', 'story-body-text story-content'}):
-		print(story)
+	page = soup.findAll('p', {'class': 'story-body-text story-content'})
+	print(page)
+
 
 getNYTURL()
