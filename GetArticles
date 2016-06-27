@@ -17,6 +17,19 @@ def getNYTURL():
 				print(href)
 				getNYTCat(href)
 
+def getNewVisionURL():
+	url = "http://www.newvision.co.ug/category/east-africa"
+	r = requests.get(url)
+	text = r.text
+	soup = BeautifulSoup(text, "html.parser")
+	for story in soup.findAll('div', {'class': 'common_list common-left'}):
+		for article in story.findAll('div', {'class':'list_discription'}):
+			a = article.find('a')
+			href = a.get('href')
+			href = 'http://www.newvision.co.ug/' + href
+			print href
+
+
 def getNYTCat(href):
 	url = href;
 	r = requests.get(url)
@@ -31,3 +44,4 @@ def getNYTCat(href):
 
 
 getNYTURL()
+getNewVisionURL()
