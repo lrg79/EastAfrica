@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>East Africa Graph</title>
     <script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
     <style>
@@ -28,6 +29,8 @@
 
     <script type="text/javascript">
 
+        var urls = "hi";
+
         var w = 500,
             h = 300;
 
@@ -43,14 +46,11 @@
             .attr("height", 200);
 
         d3.json("allUrls.json", function(json){
-            var urls = json;
-            var text = list.selectAll(".scrollable")
-                .data(urls)
-                .enter()
-                .append("text")
-                .text(function(d){
-                    return d.url + "\n";
-                })
+            urls = json;
+            var div = document.getElementById('listArticles');
+            for(var i = 0; i < json.length; i++){
+                div.innerHTML += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+            }
         });
 
         //loading data and finding max for chart
