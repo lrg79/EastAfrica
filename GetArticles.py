@@ -6,6 +6,14 @@ import json
 
 class bigSoup:
 	response = [];
+	allUrls = [];
+	CSOUrls = [];
+	policeBrutalityURLS = [];
+	freeSpeechURLS = [];
+	protestURLS = [];
+	politicalViolenceURLS = [];
+	warURLS = [];
+	humanRightsURLS = [];
 	policeBrutality = ["police brutality", "arbitrary arrest", "unlawful arrest", "wrongful arrest", "arbitrary detention", "illegal detention", "abduction", "disappearance", "enforced disappearance", "torture", "extrajudicial killing", "summary execution"];
 	CSO = ["office break-in", "ransacked offices", "security guard", "beaten", "killed"];
 	freeSpeech = ["defamation", "criminal libel", "insulting the president", "cybercrime", "censorship", "social media shutdown", "internet shutdown", "media clampdown", "dissent"];
@@ -29,6 +37,7 @@ class bigSoup:
 				href = link.get('href')
 				if any(x in href for x in a):
 					print(href)
+					self.allUrls.append({'url': str(href)});
 					self.getNYTCat(href)
 
 	def getNYTCat(self, href):
@@ -51,7 +60,8 @@ class bigSoup:
 				href = a.get('href')
 				href = 'http://www.newvision.co.ug/' + href
 				print href
-				getNewVisionCat(href)
+				self.allUrls.append({'url': str(href)});
+				self.getNewVisionCat(href)
 
 	def getNewVisionCat(self, href):
 		url = href;
@@ -60,7 +70,8 @@ class bigSoup:
 		soup = BeautifulSoup(text, "html.parser")
 		for story in soup.findAll('div', {'class': 'article-content'}):
 			page = soup.findAll('p')
-		print(page)
+		#print(page)
+		self.catagorize(page)
 
 	#allAfrica
 
@@ -79,10 +90,12 @@ class bigSoup:
 						href = href.get('href')
 						if "all" in str(href):
 							print href
+							self.allUrls.append({'url': str(href)});
 							getAfricaCat(href)
 						else:
 							href = "http://allafrica.com" + href
 							print href
+							self.allUrls.append({'url': str(href)});
 							getAfricaCat(href)
 			pageNum = pageNum + 1
 			print pageNum
@@ -96,7 +109,7 @@ class bigSoup:
 		for story in soup.findAll('div', {'class': 'story-body'}):
 			global page
 			page = soup.findAll('p')
-		print page
+		self.catagorize(page);
 
 	#washington post
 	def getWashingtonURL(self):
@@ -108,7 +121,9 @@ class bigSoup:
 			for h3 in story.findAll('h3'):
 				href = h3.a.get('href')
 				print href
-				getWashingtonCat(href)
+				self.allUrls.append({'url': str(href)});
+				if(href != ""):
+					self.getWashingtonCat(href)
 
 	def getWashingtonCat(self, href):
 		url = href;
@@ -119,7 +134,8 @@ class bigSoup:
 		for div in soup.findAll('div', {'id': 'article-body'}):
 			global page
 			page = div.findAll('p')
-		print page
+		#print page
+		self.catagorize(page)
 
 	def catagorize(self, page):
 		page = str(page)
@@ -139,18 +155,21 @@ class bigSoup:
 		j = 0
 		while j < 7:
 			print str(self.keywordsName[j]) + " " + str(self.numKeywords[j])
-			self.response.append({'y': str(self.numKeywords[j]), 'label': str(self.numKeywords[j]), 'indexLabel': self.keywordsName[j]});
+			self.response.append({'n': self.numKeywords[j], 'label': self.keywordsName[j]});
 			j = j+1
 
 	def printJSON(self):
 		#   { y: 21, label: "21%", indexLabel: "Video" },
-		with open('output.js', 'w') as outfile:
+		with open('output.json', 'w') as outfile:
 			json.dump(bigSoup.response, outfile)
-		print(len(bigSoup.response))
-		print json.dumps(bigSoup.response)
+		with open('allUrls.json', 'w') as outfile:
+			json.dump(bigSoup.allUrls, outfile)	
 
 soup = bigSoup();
 soup.getNYTURL();
+soup.getWashingtonURL();
+soup.getAfricaURL();
+soup.getNewVisionURL();
 soup.printNumKeywords();
 soup.printJSON();
 #getNewVisionURL()
