@@ -1,46 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bar Chart Example</title>
+    <title>East Africa Graph</title>
     <script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
     <style>
-        .bar.policeBrutality { fill: green; }
-        .bar.CSO { fill: orange; }
-        .bar.freeSpeech { fill: yellow; }
-        .bar.protest { fill: purple; }
-        .bar.politicalViolence { fill: red; }
-        .bar.war { fill: blue; }
-        .bar.humanRights { fill: gray; }
+        .bar.policeBrutality { fill: #DADAF2; }
+        .bar.CSO { fill: #BBDDDD; }
+        .bar.freeSpeech { fill: #D7DADD; }
+        .bar.protest { fill: #AADDDD; }
+        .bar.politicalViolence { fill: #AFCFF3; }
+        .bar.war { fill: #AEADD8; }
+        .bar.humanRights { fill: #8899AA; }
 
-        .info {
-            padding: 6px 8px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
-            background: white;
-            background: rgba(255,255,255,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;
-        }
-        .info h4 {
-            margin: 0 0 5px;
-            color: #777;
+        .scrollable {
+            height: 200px; /* or any value */
+            overflow-y: auto;
         }
     </style>
 
 </head>
 <body>
+    <h1>East Africa Chart</h1>
     <div id="chart"></div>
+    <div class="scrollable" id = "listArticles"></div>
+
 </body>
 
     <script type="text/javascript">
 
         var w = 500,
-            h = 500;
+            h = 300;
 
         //setting up svg element
         var svg = d3.select("#chart")
             .append("svg")
             .attr("width", w)
             .attr("height", h);
+
+        var list = d3.select('#listArticles')
+            .append("svg")
+            .attr("width", 500)
+            .attr("height", 200);
+
+        d3.json("allUrls.json", function(json){
+            var urls = json;
+            var text = list.selectAll(".scrollable")
+                .data(urls)
+                .enter()
+                .append("text")
+                .text(function(d){
+                    return d.url + "\n";
+                })
+        });
 
         //loading data and finding max for chart
     
@@ -65,8 +76,16 @@
                 .attr("x", function(d, i) {return 0;})
                 .attr("y", function(d, i) {return dy*i;})
                 .attr("width", function(d, i) {return dx*d.n})
-                .attr("height", dy);
-    
+                .attr("height", dy)
+                .on("mouseover", function() {
+                 d3.select(this)
+                    .attr("stroke", "white");
+                 })
+                .on("mouseout", function(d, i) {
+                    d3.select(this)
+                    .attr("stroke", "none");
+                });
+
             // labels
             var text = svg.selectAll("text")
                 .data(data)
