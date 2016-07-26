@@ -24,7 +24,14 @@
     <h1>East Africa Chart</h1>
     <div id="chart"></div>
     <div class="scrollable" id = "listArticles"></div>
-
+    <button type="button" id = "CSOButton">CSO</button>
+    <button type="button" id = "PoliceButton">Police Brutality</button>
+    <button type="button" id = "SpeechButton">Free Speech</button>
+    <button type="button" id = "ProtestButton">Protest</button>
+    <button type="button" id = "ViolenceButton">Political Violence</button>
+    <button type="button" id = "WarButton">War</button>
+    <button type="button" id = "RightsButton">Human Rights</button>
+    <button type="button" id = "AllButton">All</button>
 </body>
 
     <script type="text/javascript">
@@ -46,11 +53,66 @@
             .attr("height", 200);
 
         d3.json("allUrls.json", function(json){
+            //TODO:
+            //fill if else
+            //make initializing statement for Text variables the heading
+            var text = "<h4>" + "All Urls" + "</h4></br>";
+            var CSOText = "<h4>" + "CSO" + "</h4></br>";
+            var policeBrutalityText= "<h4>" + "Police Brutality" + "</h4></br>";;
+            var humanRightsText= "<h4>" + "Human Rights" + "</h4></br>";;
+            var warText= "<h4>" + "War" + "</h4></br>";;
+            var freeSpeechText= "<h4>" + "Free Speech" + "</h4></br>";;
+            var protestText= "<h4>" + "Protest" + "</h4></br>";;
+            var politicalViolenceText= "<h4>" + "Political Violence" + "</h4></br>";;
             urls = json;
             var div = document.getElementById('listArticles');
+
             for(var i = 0; i < json.length; i++){
-                div.innerHTML += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                //div.innerHTML += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                if(urls[i].cat === "CSO"){
+                    CSOText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "policeBrutality"){
+                    policeBrutalityText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "humanRights"){
+                    humanRightsText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "war"){
+                    warText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "freeSpeech"){
+                    freeSpeechText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "politicalViolence"){
+                    politicalViolenceText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "protest"){
+                    protestText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }else if(urls[i].cat === "none"){
+                    text += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                }
             }
+
+            div.innerHTML += text + CSOText + policeBrutalityText + humanRightsText + warText + freeSpeechText + protestText + politicalViolenceText;
+            /*document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​   
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​
+            document.getElementById('button').onclick = function() {
+                alert("button was clicked");
+            }​;​  */                   
         });
 
         //loading data and finding max for chart
