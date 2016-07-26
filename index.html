@@ -89,30 +89,30 @@
             }
 
             div.innerHTML += text + CSOText + policeBrutalityText + humanRightsText + warText + freeSpeechText + protestText + politicalViolenceText;
-            /*document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​   
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​
-            document.getElementById('button').onclick = function() {
-                alert("button was clicked");
-            }​;​  */                   
+            document.getElementById('CSOButton').onclick = function() {
+                div.innerHTML = CSOText;
+            };
+            document.getElementById('PoliceButton').onclick = function() {
+                 div.innerHTML = policeBrutalityText;
+            };
+            document.getElementById('RightsButton').onclick = function() {
+                div.innerHTML = humanRightsText;
+            };   
+            document.getElementById('WarButton').onclick = function() {
+               div.innerHTML = warText;
+            };
+            document.getElementById('ViolenceButton').onclick = function() {
+                div.innerHTML = politicalViolenceText;
+            };
+            document.getElementById('SpeechButton').onclick = function() {
+                div.innerHTML = freeSpeechText;
+            };
+            document.getElementById('ProtestButton').onclick = function() {
+                div.innerHTML = protestText;
+            };
+            document.getElementById('AllButton').onclick = function() {
+                div.innerHTML = text;
+            };               
         });
 
         //loading data and finding max for chart
