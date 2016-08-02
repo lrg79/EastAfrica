@@ -14,32 +14,41 @@
         .bar.humanRights { fill: #8899AA; }
 
         .scrollable {
-            height: 200px; /* or any value */
+            height: 450px; 
             overflow-y: auto;
+            border:1px solid black;
+        }
+        .button {
+            background-color: #64B1D8; 
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
         }
     </style>
 
 </head>
 <body>
-    <h1>East Africa Chart</h1>
+    <h1>East Africa News</h1>
     <div id="chart"></div>
     <div class="scrollable" id = "listArticles"></div>
-    <button type="button" id = "CSOButton">CSO</button>
-    <button type="button" id = "PoliceButton">Police Brutality</button>
-    <button type="button" id = "SpeechButton">Free Speech</button>
-    <button type="button" id = "ProtestButton">Protest</button>
-    <button type="button" id = "ViolenceButton">Political Violence</button>
-    <button type="button" id = "WarButton">War</button>
-    <button type="button" id = "RightsButton">Human Rights</button>
-    <button type="button" id = "AllButton">All</button>
+    <button type="button" class = "button" id = "CSOButton">CSO</button>
+    <button type="button" class = "button" id = "PoliceButton">Police Brutality</button>
+    <button type="button" class = "button" id = "SpeechButton">Free Speech</button>
+    <button type="button" class = "button" id = "ProtestButton">Protest</button>
+    <button type="button" class = "button" id = "ViolenceButton">Political Violence</button>
+    <button type="button" class = "button" id = "WarButton">War</button>
+    <button type="button" class = "button" id = "RightsButton">Human Rights</button>
+    <button type="button" class = "button" id = "AllButton">All</button>
 </body>
 
     <script type="text/javascript">
 
-        var urls = "hi";
-
         var w = 500,
-            h = 300;
+            h = 320;
 
         //setting up svg element
         var svg = d3.select("#chart")
@@ -58,37 +67,49 @@
             //make initializing statement for Text variables the heading
             var text = "<h4>" + "All Urls" + "</h4></br>";
             var CSOText = "<h4>" + "CSO" + "</h4></br>";
-            var policeBrutalityText= "<h4>" + "Police Brutality" + "</h4></br>";;
-            var humanRightsText= "<h4>" + "Human Rights" + "</h4></br>";;
-            var warText= "<h4>" + "War" + "</h4></br>";;
-            var freeSpeechText= "<h4>" + "Free Speech" + "</h4></br>";;
-            var protestText= "<h4>" + "Protest" + "</h4></br>";;
-            var politicalViolenceText= "<h4>" + "Political Violence" + "</h4></br>";;
+            var policeBrutalityText= "<h4>" + "Police Brutality" + "</h4></br>";
+            var humanRightsText= "<h4>" + "Human Rights" + "</h4></br>";
+            var warText= "<h4>" + "War" + "</h4></br>";
+            var freeSpeechText= "<h4>" + "Free Speech" + "</h4></br>";
+            var protestText= "<h4>" + "Protest" + "</h4></br>";
+            var politicalViolenceText= "<h4>" + "Political Violence" + "</h4></br>";
             urls = json;
             var div = document.getElementById('listArticles');
 
             for(var i = 0; i < json.length; i++){
                 //div.innerHTML += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
                 if(urls[i].cat === "CSO"){
-                    CSOText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    CSOText += "<br>" + "<a href = "+urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "policeBrutality"){
-                    policeBrutalityText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    policeBrutalityText += "<br>" + "<a href = "+urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "humanRights"){
-                    humanRightsText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    humanRightsText += "<br>" + "<a href = "+urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "war"){
-                    warText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    warText += "<br>" + "<a href ="+ urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "freeSpeech"){
-                    freeSpeechText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    freeSpeechText += "<br>" + "<a href = "+urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "politicalViolence"){
-                    politicalViolenceText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    politicalViolenceText += "<br>" + "<a href = "+urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "protest"){
-                    protestText += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    "<br>" + "<a href = "+ urls[i].url+ ">" + urls[i].url + "</a>" + "</br>";
                 }else if(urls[i].cat === "none"){
-                    text += "<br>" + "<a href = urls[i].url>" + urls[i].url + "</a>" + "</br>";
+                    text += "<br>" + "<a href = "+urls[i].url+">" + urls[i].url + "</a>" + "</br>";
                 }
             }
 
-            div.innerHTML += text + CSOText + policeBrutalityText + humanRightsText + warText + freeSpeechText + protestText + politicalViolenceText;
+            function removeDuplicates(arr){
+                var string = "" + arr[0];
+                for(var i = 1; i < arr.length; i++){
+                    var string1 = "" + arr[i];
+                    if(string === string1){
+                        arr.splice(i, 1);
+                    }else{
+                        string = string1;
+                    }
+                }
+            }
+
+            div.innerHTML = text + CSOText + policeBrutalityText + humanRightsText + warText + freeSpeechText + protestText + politicalViolenceText;
             document.getElementById('CSOButton').onclick = function() {
                 div.innerHTML = CSOText;
             };
@@ -114,7 +135,7 @@
                 div.innerHTML = text;
             };               
         });
-
+        
         //loading data and finding max for chart
     
         d3.json("output.json", function(json) {
